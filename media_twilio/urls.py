@@ -20,4 +20,5 @@ from media_twilio_app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('message', views.message),
+    path('view/', views.view_send_image),
 ]

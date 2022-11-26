@@ -38,3 +38,10 @@ def message(request):
         response.message('Please send an image!')
 
     return HttpResponse('Hello!')
+
+
+def view_send_image(request):
+    for root, dirs, files in os.walk("uploads"):
+        print(root, dirs, files)
+    
+    return HttpResponse("working")
