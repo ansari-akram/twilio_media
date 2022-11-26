@@ -31,6 +31,8 @@ def message(request):
                 os.mkdir(f'uploads/{username}')
             with open(filename, 'wb') as f:
                 f.write(r.content)
+
+            print("IMAGE SAVED")
             response.message('Thank you! Your image was received.')
         else:
             response.message('The file that you submitted is not a supported image type.')
@@ -41,7 +43,12 @@ def message(request):
 
 
 def view_send_image(request):
+    images_list = {}
     for root, dirs, files in os.walk("uploads"):
-        print(root, dirs, files)
+        for _file in files:
+            if _file.endswith("jpg"):
+                images_list[root] = _file
+    
+    print(images_list)
     
     return HttpResponse("working")
