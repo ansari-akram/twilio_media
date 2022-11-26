@@ -31,7 +31,7 @@ def message(request):
             filename = None
         if filename:
             img = Image()
-            img.image.save(ContentFile(r.content), save=True)
+            img.image.save(content=ContentFile(r.content), save=True)
             # if not os.path.exists(f'uploads/{username}'):
             #     os.mkdir(f'uploads/{username}')
             # with open(filename, 'wb') as f:
