@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 import os
 import requests
 from twilio.twiml.messaging_response import MessagingResponse
+from django.shortcuts import render
 
 
 @csrf_exempt
@@ -50,5 +51,9 @@ def view_send_image(request):
                 images_list[root] = _file
     
     print(images_list)
+
+    context = {
+        'images_list': images_list,
+    }
     
-    return HttpResponse("working")
+    return render(request, "index.html", context)
