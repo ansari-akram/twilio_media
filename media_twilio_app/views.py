@@ -4,6 +4,8 @@ import os
 import requests
 from twilio.twiml.messaging_response import MessagingResponse
 from django.shortcuts import render
+from .models import Image
+from django.core.files.base import ContentFile
 
 
 @csrf_exempt
@@ -28,10 +30,12 @@ def message(request):
         else:
             filename = None
         if filename:
-            if not os.path.exists(f'uploads/{username}'):
-                os.mkdir(f'uploads/{username}')
-            with open(filename, 'wb') as f:
-                f.write(r.content)
+            img = Image()
+            img.image.save(ContentFile(r.content), save=True)
+            # if not os.path.exists(f'uploads/{username}'):
+            #     os.mkdir(f'uploads/{username}')
+            # with open(filename, 'wb') as f:
+            #     f.write(r.content)
 
             print("IMAGE SAVED")
             response.message('Thank you! Your image was received.')
@@ -44,16 +48,9 @@ def message(request):
 
 
 def view_send_image(request):
-    images_list = {}
-    for root, dirs, files in os.walk("uploads"):
-        for _file in files:
-            if _file.endswith("jpg"):
-                images_list[root] = _file
-    
-    print(images_list)
+    image = Image.objects.all()
 
     context = {
-        'images_list': images_list,
+        'image_list': image,
     }
-    
     return render(request, "index.html", context)
