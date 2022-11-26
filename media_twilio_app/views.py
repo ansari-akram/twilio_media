@@ -11,6 +11,7 @@ def message(request):
     message = request.POST.get('Body')
     media_url = request.POST.get('MediaUrl0')
     print(f'{user} sent {message}')
+    print(request.POST)
 
     response = MessagingResponse()
     if media_url:
